@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "cb3a14b5-a43a-4d8a-8e74-c520812862ae",
+		"name": "User Api Handler",
+		"description": "User Api handler has 5 apis: \r\n\r\n1. api to register user (will return one authentication token)\r\n2. api to remove user\r\n3. api to read all users (needs token authentication)\r\n4. api to create own task (needs token authentication)\r\n5. api to read task of a user (needs token authentication and user id)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"hi@gmail.com\", \"password\":\"sddssd\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/register",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				},
+				"description": "api to create user, pass email and password in the body parameters."
+			},
+			"response": []
+		},
+		{
+			"name": "create task",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\":\"task7\", \"priority\": true}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/task/create",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"task",
+						"create"
+					]
+				},
+				"description": "create your own task, pass title(required) as the title of task and priority(optional) as boolean value."
+			},
+			"response": []
+		},
+		{
+			"name": "Remove user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/user/6104fcfe71b85e85cc0aa965/remove",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"6104fcfe71b85e85cc0aa965",
+						"remove"
+					]
+				},
+				"description": "api to delete user."
+			},
+			"response": []
+		},
+		{
+			"name": "Read all users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/user/readall?limit=2&page=2&sort=desc",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"readall"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "2"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "desc"
+						}
+					]
+				},
+				"description": "api to read all users, requires token authentication and to be passed as x-access-token in headers. this api supports pagination. limit(default:100)(number), page (default: 1)(number), sort (default: desc)(available values: desc, asc)."
+			},
+			"response": []
+		},
+		{
+			"name": "Read tasks of a user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/api/{{USER_ID}}/tasks",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"{{USER_ID}}",
+						"tasks"
+					]
+				},
+				"description": "api to read tasks of a specific user by providing id of user in the url, api needs token authentication, token needs to be provided as x-access-token in headers."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8000"
+		},
+		{
+			"key": "USER_ID",
+			"value": "6104f78b92be3c978c262eca"
+		},
+		{
+			"key": "TOKEN",
+			"value": "VTcbEE5r1GcLbrf4umSyqdEzN"
+		}
+	]
+}
